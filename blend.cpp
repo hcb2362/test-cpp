@@ -179,45 +179,19 @@ main(int, char**)
       env.out() << "Elements:" << endl;
       for(j = 0; j < nbElements; j++)
          env.out() << j << ") " << cplex.getValue(e[j]) << endl;
+
 	  
-	  IloNum newM[1000];
-	  IloNum newR[1000];
-	  IloNum newS[1000];
-	  IloNum newI[1000];
-	  IloNum newE[1000];
-
-	  for (j = 0; j < nbElements; j++) {
-		  newM[j] = (cplex.getValue(m[j]));
-	  }
-	  for (j = 0; j < nbRaw; j++) {
-		  newR[j] = (cplex.getValue(r[j]));
-	  }
-	  for (j = 0; j < nbScrap; j++) {
-		  newS[j] = (cplex.getValue(s[j]));
-	  }
-	  for (j = 0; j < nbIngot; j++) {
-		  newI[j] = (cplex.getValue(i[j]));
-	  }
-	  for (j = 0; j < nbElements; j++) {
-		  newE[j] = (cplex.getValue(e[j]));
-	  }
-
-	  /*
 	  json output = {
-		  {"Solution status", cplex.getStatus()}
+		  {"Solution status", cplex.getStatus()},
 		  { "Cost", cplex.getObjValue()},
-		  {"Pure metal", },
-	  { "Raw material", for (j = 0; j < nbElements; j++) {
-		  cplex.getValue(r[j]);}},
-		  { "Scrap", for (j = 0; j < nbElements; j++) {
-			  cplex.getValue(s[j]);}},
-			  { "Ingots", for (j = 0; j < nbElements; j++) {
-					  cplex.getValue(i[j]);}},
-					  { "Elements", for (j = 0; j < nbElements; j++) {
-								  cplex.getValue(e[j]);
-} },
+		  {"Pure metal", {m}},
+		  { "Raw material", {r}},
+		  { "Scrap", {s}},
+		  { "Ingots", {i}},
+		  { "Elements", {e}}
 	  };
-	  */
+	  
+	  
 	  
 
    }
