@@ -118,6 +118,8 @@ main(int, char**)
 	std::cout << j.dump(4) << std::endl;
 	*/
 
+	json output;
+
 	IloEnv env;
    try {
       IloInt j;
@@ -165,32 +167,34 @@ main(int, char**)
       // Print results
       env.out() << "Cost:" << cplex.getObjValue() << endl;
       env.out() << "Pure metal:" << endl;
-      for(j = 0; j < nbElements; j++)
-         env.out() << j << ") " << cplex.getValue(m[j]) << endl;
+	  for (j = 0; j < nbElements; j++) {
+		  output["Pure metal"].push_back(cplex.getValue(m[j]));
+		  env.out() << j << ") " << output["Pure metal"] << endl;
+	  }
+         
       env.out() << "Raw material:" << endl;
-      for(j = 0; j < nbRaw; j++)
-         env.out() << j << ") " << cplex.getValue(r[j]) << endl;
+	  for (j = 0; j < nbRaw; j++) {
+		  output["Raw material"].push_back(cplex.getValue(r[j]));
+		  env.out() << j << ") " << output["Raw material"] << endl;
+	  }
       env.out() << "Scrap:" << endl;
-      for(j = 0; j < nbScrap; j++)
-         env.out() << j << ") " << cplex.getValue(s[j]) << endl;
-      env.out() << "Ingots : " << endl;
-      for(j = 0; j < nbIngot; j++)
-         env.out() << j << ") " << cplex.getValue(i[j]) << endl;
-      env.out() << "Elements:" << endl;
-      for(j = 0; j < nbElements; j++)
-         env.out() << j << ") " << cplex.getValue(e[j]) << endl;
+	  for (j = 0; j < nbScrap; j++) {
+		  output["Scrap"].push_back(cplex.getValue(s[j]));
+		  env.out() << j << ") " << output["Scrap"] << endl;
+	  }
 
-	  
-	  json output = {
-		  {"Solution status", cplex.getStatus()},
-		  { "Cost", cplex.getObjValue()},
-		  {"Pure metal", {m}},
-		  { "Raw material", {r}},
-		  { "Scrap", {s}},
-		  { "Ingots", {i}},
-		  { "Elements", {e}}
-	  };
-	  
+      env.out() << "Ingots : " << endl;
+	  for (j = 0; j < nbIngot; j++) {
+		  output["Ingots"].push_back(cplex.getValue(i[j]));
+		  env.out() << j << ") " << output["Ingots"] << endl;
+	  }
+      env.out() << "Elements:" << endl;
+	  for (j = 0; j < nbElements; j++) {
+		  output["Elements"].push_back(cplex.getValue(e[j]));
+		  env.out() << j << ") " << output["Elements"] << endl;
+	  }
+
+	  cout << output.dump(2) << endl;
 	  
 	  
 
